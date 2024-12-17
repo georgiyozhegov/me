@@ -1,0 +1,49 @@
+body { 
+      background-color: rgb(27 32 33);
+}
+
+#block {
+      width: 260px;
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -25%);
+      padding: 20px;
+      border-radius: 20px;
+      border: 4px dashed;
+      border-color: rgb(234 158 141);
+      background-color: rgb(98 146 158);
+}
+
+#profile {
+      width: 80%;
+      border-radius: 50%;
+      margin-inline: auto;
+      display: block;
+}
+
+#username {
+      font-family: "Noto Sans Mono";
+      text-align: center;
+      color: rgb(234 158 141);
+      margin-top: 20px;
+}
+
+#links {
+      width: 80%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      background-color: rgb(234 158 141);
+      padding: 20px;
+      border-radius: 20px;
+      margin-inline: auto;
+      margin-top: 20px;
+}
+
+.icon {
+      height: 32px;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-inline: auto;
+}
