@@ -1,3 +1,7 @@
 languageCode = "ru"
 title = "Georgiy Ozhegov"
 theme = "PaperMod"
+
+[[module.mounts]]
+source = "static"
+target = "static"
