@@ -8,6 +8,9 @@ ShowShareButtons = true
 hideSummary = true
 disableScrollToTop = true
 
+[params.analytics.yandex]
+SiteVerificationTag = "99441177"
+
 [params.profileMode]
 enabled = true
 title = "<title>"
