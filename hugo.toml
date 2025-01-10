@@ -1,7 +1,29 @@
 languageCode = "ru"
-title = "Georgiy Ozhegov"
 theme = "PaperMod"
+title = "Georgiy Ozhegov"
 
-[[module.mounts]]
-source = "static"
-target = "static"
+[params]
+ShowReadingTime = true
+ShowShareButtons = true
+hideSummary = true
+disableScrollToTop = true
+
+[params.profileMode]
+enabled = true
+title = "<title>"
+subtitle = "Мой маленький сайт в большом интернете"
+imageUrl = "https://i.ibb.co/7YC2KFH/The-Best-Profile-Ever.jpg"
+imageWidth = 238
+imageHeight = 238
+
+[[params.profileMode.buttons]]
+name = "Блог"
+url = "/blog"
+
+[[params.socialIcons]]
+name = "Telegram"
+url = "https://t.me/georgiyozhegov"
+
+[[params.socialIcons]]
+name = "GitHub"
+url = "https://github.com/georgiyozhegov"
