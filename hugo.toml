@@ -18,7 +18,7 @@ imageHeight = 238
 
 [[params.profileMode.buttons]]
 name = "Блог"
-url = "/blog"
+url = "/me/blog"
 
 [[params.socialIcons]]
 name = "Telegram"
