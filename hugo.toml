@@ -1,12 +1,25 @@
+baseURL = "https://georgiyozhegov.github.io/me"
 languageCode = "ru"
+defaultContentLanguage = "ru"
 theme = "PaperMod"
-title = "Georgiy Ozhegov"
+title = "GБлог"
 
 [params]
 ShowReadingTime = true
-ShowShareButtons = true
 hideSummary = true
 disableScrollToTop = true
+
+keywords = [
+      "блог",
+      "небольшой сайт",
+      "мини сайты",
+      "личный блог",
+      "английский",
+      "английский язык",
+      "программирование",
+]
+description = "Мой личный блог о программировании и английском"
+author = "Георгий Ожегов"
 
 [params.profileMode]
 enabled = true
