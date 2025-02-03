@@ -6,6 +6,7 @@ title = "GБлог"
 
 [params]
 ShowReadingTime = true
+showtoc = true
 hideSummary = true
 disableScrollToTop = true
 
