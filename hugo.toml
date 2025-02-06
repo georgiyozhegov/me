@@ -28,7 +28,7 @@ author = "Георгий Ожегов"
 enabled = true
 title = "<title>"
 subtitle = "Мой маленький сайт в большом интернете"
-imageUrl = "https://i.ibb.co/7YC2KFH/The-Best-Profile-Ever.jpg"
+imageUrl = "/me/Logo.png"
 imageWidth = 238
 imageHeight = 238
 
