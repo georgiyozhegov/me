@@ -12,6 +12,9 @@ hideSummary = true
 disableScrollToTop = true
 
 keywords = [
+      "georgiyozhegov",
+      "gблог",
+      "gblog",
       "блог",
       "небольшой сайт",
       "мини сайты",
@@ -33,7 +36,7 @@ author = "Георгий Ожегов"
 [params.profileMode]
 enabled = true
 title = "<title>"
-subtitle = "Мой маленький блог о программировании и английском"
+subtitle = "Мой личный блог о программировании и английском"
 imageUrl = "/me/Logo.png"
 imageWidth = 238
 imageHeight = 238
