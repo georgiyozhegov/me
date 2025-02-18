@@ -33,6 +33,11 @@ keywords = [
 description = "Мой личный блог о программировании и английском"
 author = "Георгий Ожегов"
 
+[params.assets]
+favicon16x16 = "/me/favicon-16x16.png"
+favicon32x32 = "/me/favicon-32x32.png"
+apple_touch_icon = "/me/apple-touch-icon.png"
+
 [params.profileMode]
 enabled = true
 title = "<title>"
