@@ -6,6 +6,7 @@ title = "GБлог"
 
 [params]
 ShowReadingTime = true
+ShowCodeCopyButtons = true
 showtoc = true
 hideSummary = true
 disableScrollToTop = true
@@ -15,11 +16,16 @@ keywords = [
       "небольшой сайт",
       "мини сайты",
       "личный блог",
+      "авторский блог",
       "английский",
       "английский язык",
+      "образовние",
       "программирование",
       "rust",
       "c++",
+      "neovim",
+      "nvim",
+      "vim",
 ]
 description = "Мой личный блог о программировании и английском"
 author = "Георгий Ожегов"
@@ -27,13 +33,13 @@ author = "Георгий Ожегов"
 [params.profileMode]
 enabled = true
 title = "<title>"
-subtitle = "Мой маленький сайт в большом интернете"
+subtitle = "Мой маленький блог о программировании и английском"
 imageUrl = "/me/Logo.png"
 imageWidth = 238
 imageHeight = 238
 
 [[params.profileMode.buttons]]
-name = "Блог"
+name = "Читать"
 url = "/me/blog"
 
 [[params.socialIcons]]
