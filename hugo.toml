@@ -52,7 +52,7 @@ url = "/me/blog"
 
 [[params.socialIcons]]
 name = "Telegram"
-url = "https://t.me/georgiyozhegov"
+url = "https://t.me/thegblog"
 
 [[params.socialIcons]]
 name = "GitHub"
