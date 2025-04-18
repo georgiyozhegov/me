@@ -1,6 +1,7 @@
 +++
 date = "2025-02-05T10:58:47+04:00"
 draft = false
+tags = ["neovim", "<3"]
 title = "Neovim: Минимализм & Удобство"
 +++
 
