@@ -1,18 +1,141 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Georgiy Ozhegov</title>
-    <link>//localhost:1313/</link>
-    <description>Recent content on Georgiy Ozhegov</description>
-    <generator>Hugo -- 0.140.2</generator>
+    <title>GБлог</title>
+    <link>http://localhost:1313/me/</link>
+    <description>Recent content on GБлог</description>
+    <generator>Hugo -- 0.147.5</generator>
     <language>ru</language>
-    <lastBuildDate>Thu, 09 Jan 2025 14:12:59 +0400</lastBuildDate>
-    <atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Apr 2025 16:49:11 +0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Хватит говорить, что ИИ нас заменит</title>
+      <link>http://localhost:1313/me/blog/%D1%85%D0%B2%D0%B0%D1%82%D0%B8%D1%82-%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%B8%D1%82%D1%8C-%D1%87%D1%82%D0%BE-%D0%B8%D0%B8-%D0%BD%D0%B0%D1%81-%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD%D0%B8%D1%82/</link>
+      <pubDate>Fri, 18 Apr 2025 16:49:11 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D1%85%D0%B2%D0%B0%D1%82%D0%B8%D1%82-%D0%B3%D0%BE%D0%B2%D0%BE%D1%80%D0%B8%D1%82%D1%8C-%D1%87%D1%82%D0%BE-%D0%B8%D0%B8-%D0%BD%D0%B0%D1%81-%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD%D0%B8%D1%82/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Hard truth, can&amp;rsquo;t swallow&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/VibeCodingTruth.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Сидишь вечером и смотришь на то, как ChatGPT за несколько секунд пишет полнофункциональное CRUD-приложение. Пялишься на экран и спрашиваешь себя&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Заменит ли меня эта штука или нет?&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;Ты не один, кто задается таким вопросом &amp;ndash; и нет, твоя карьера, к счастью, ещё не закончилась.&lt;/p&gt;
+&lt;h1 id=&#34;ии-хорош-но-ии--разработчик&#34;&gt;ИИ хорош, но ИИ ≠ разработчик&lt;/h1&gt;
+&lt;p&gt;ИИ уже вошёл в индустрию &amp;ndash; инструменты как ChatGPT, Copilot, и Claude заметно повышают скорость разработки. Ещё в 2022, когда ChatGPT только появился, никто не мог себе такого представить.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Используем C в Ассембли</title>
+      <link>http://localhost:1313/me/blog/%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC-c-%D0%B2-%D0%B0%D1%81%D1%81%D0%B5%D0%BC%D0%B1%D0%BB%D0%B8/</link>
+      <pubDate>Fri, 28 Mar 2025 10:06:37 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC-c-%D0%B2-%D0%B0%D1%81%D1%81%D0%B5%D0%BC%D0%B1%D0%BB%D0%B8/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Процесс линковки&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/CWithAsm.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Разрабатывая стандартную библиотеку для своего языка, столкнулся с неочевидной задачей: как связывать код написанный на C с ассембли. Первый подход &amp;ndash; компиляция C в ассембли и ручное копирование кода &amp;ndash; оказался не самым удобным. Две проблемы этого способа это несовместимость синтаксиса GCC и Nasm и постоянное дублирование кода при малейших изменениях.&lt;/p&gt;
+&lt;h1 id=&#34;решение&#34;&gt;Решение&lt;/h1&gt;
+&lt;p&gt;Теперь расскажу о способе, который является оптимальным &amp;ndash; &lt;strong&gt;линковке объектных файлов&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;пример&#34;&gt;Пример&lt;/h2&gt;
+&lt;p&gt;Приведу пример из моего языка &amp;ndash; функция для печати целых чисел.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Шаг 1: Lexing</title>
+      <link>http://localhost:1313/me/blog/%D1%88%D0%B0%D0%B3-1-lexing/</link>
+      <pubDate>Wed, 12 Mar 2025 16:35:41 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D1%88%D0%B0%D0%B3-1-lexing/</guid>
+      <description>&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/LexCover.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Это первая статья из серии про процесс компиляции, в которой каждый этап описывается по отдельности. Перед прочтением советую прочитать предыдущую обзорную статью, описывающую весь процесс в общих чертах, которую можно &lt;a href=&#34;https://georgiyozhegov.github.io/me/blog/%D0%BF%D1%83%D1%82%D1%8C-%D0%BE%D1%82-%D0%BA%D0%BE%D0%B4%D0%B0-%D0%B4%D0%BE-%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D0%BE%D0%B3%D0%BE-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0/&#34;&gt;найти здесь&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Относительно других этапов, лексический анализ &amp;ndash; самый простой, хотя и может показаться сложным на первый взгляд, поэтому эта статья будет самой короткой из серии.&lt;/p&gt;
+&lt;p&gt;Весь код взят из &lt;a href=&#34;https://github.com/georgiyozhegov/mellow/tree/master/lib/syntax/src/lex&#34;&gt;этого репозитория&lt;/a&gt; и упрощен, для лучшего понимания.&lt;/p&gt;
+&lt;h1 id=&#34;код&#34;&gt;Код&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;source.txt&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Для примера возьмем небольшой фрагмент кода на вымышленном языке программирования.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Путь от Кода до Бинарного Файла</title>
+      <link>http://localhost:1313/me/blog/%D0%BF%D1%83%D1%82%D1%8C-%D0%BE%D1%82-%D0%BA%D0%BE%D0%B4%D0%B0-%D0%B4%D0%BE-%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D0%BE%D0%B3%D0%BE-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0/</link>
+      <pubDate>Tue, 04 Mar 2025 19:04:43 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D0%BF%D1%83%D1%82%D1%8C-%D0%BE%D1%82-%D0%BA%D0%BE%D0%B4%D0%B0-%D0%B4%D0%BE-%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D0%BE%D0%B3%D0%BE-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Процесс компиляции&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/CompilationProcessCover.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Как же исходный код превращается в бинарный файл, который потом исполняется на компьютере?&lt;/strong&gt; Не нашёл ни одной статьи, которая описывала бы полный процесс от начала до конца, поэтому я написал данный материал.&lt;/p&gt;
+&lt;p&gt;Как оказалось, не всё так трудно, как мне изначально казалось. Я понимаю, что в настоящих больших компиляторах всё гораздо сложнее, но это не меняет принципа по которым они строятся и работают.&lt;/p&gt;
+&lt;h1 id=&#34;этапы&#34;&gt;Этапы&lt;/h1&gt;
+&lt;h2 id=&#34;1-lexing&#34;&gt;1. &lt;em&gt;Lexing&lt;/em&gt;&lt;/h2&gt;
+&lt;p&gt;На этом этапе исходный код в виде строки разделяется на отдельные части, то есть токены. Этот этап &amp;ndash; самый простой во всём процессе компиляции.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Моем Код с Мылом</title>
+      <link>http://localhost:1313/me/blog/%D0%BC%D0%BE%D0%B5%D0%BC-%D0%BA%D0%BE%D0%B4-%D1%81-%D0%BC%D1%8B%D0%BB%D0%BE%D0%BC/</link>
+      <pubDate>Fri, 14 Feb 2025 17:14:31 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D0%BC%D0%BE%D0%B5%D0%BC-%D0%BA%D0%BE%D0%B4-%D1%81-%D0%BC%D1%8B%D0%BB%D0%BE%D0%BC/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Пузырьки!&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/CleanCodeCover.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Эта статья &amp;ndash; краткий обзор первой половины книги &lt;em&gt;Чистый код&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Разберём ключевые принципы именования переменных, проектирования функций и других аспектов, чтобы писать код, который будет понятен вам и вашей команде спустя годы.&lt;/p&gt;
+&lt;h1 id=&#34;для-самых-нетерпеливых&#34;&gt;Для самых нетерпеливых&lt;/h1&gt;
+&lt;p&gt;Основные тезисы для тех, кто не хочет читать эту прекрасную статью целиком.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Думайте над именами&lt;/li&gt;
+&lt;li&gt;Не делайте код слишком чистым&lt;/li&gt;
+&lt;li&gt;Следуйте стандартам языка или вашей команды&lt;/li&gt;
+&lt;li&gt;Программист не должен заниматься форматированием&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;чистый-vs-грязный-код&#34;&gt;Чистый vs грязный код&lt;/h1&gt;
+&lt;p&gt;Чистый код легко читается, изменятся и поддерживается. Это тот код, с которым легко работать и вносить новый функционал.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Всё, Что Нужно Знать, Чтобы Правильно Использовать Артикли</title>
+      <link>http://localhost:1313/me/blog/%D0%B2%D1%81%D1%91-%D1%87%D1%82%D0%BE-%D0%BD%D1%83%D0%B6%D0%BD%D0%BE-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D1%87%D1%82%D0%BE%D0%B1%D1%8B-%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%B0%D1%80%D1%82%D0%B8%D0%BA%D0%BB%D0%B8/</link>
+      <pubDate>Sat, 08 Feb 2025 19:40:16 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D0%B2%D1%81%D1%91-%D1%87%D1%82%D0%BE-%D0%BD%D1%83%D0%B6%D0%BD%D0%BE-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D1%87%D1%82%D0%BE%D0%B1%D1%8B-%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D1%8C%D0%BD%D0%BE-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%B0%D1%80%D1%82%D0%B8%D0%BA%D0%BB%D0%B8/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;This &amp;amp; That&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/EnglishThisAndThat.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Часто при изучении английского многие сталкиваются с такой проблемой, как неправильное использование артиклей. Даже те, кто изучают английский долгое время, ошибаются в этом.&lt;/p&gt;
+&lt;p&gt;В этой статье разберём несколько правил для того, чтобы писать грамотно и не выдавать своё русское происхождение в англоязычных чатах.&lt;/p&gt;
+&lt;h1 id=&#34;a--для-общих-понятий&#34;&gt;&lt;em&gt;A&lt;/em&gt; &amp;ndash; для общих понятий&lt;/h1&gt;
+&lt;p&gt;Артикль &lt;strong&gt;&lt;em&gt;a&lt;/em&gt;&lt;/strong&gt; используется в тех случаях, когда говорится о каком-то общем понятии или когда что-то упоминается впервые.&lt;/p&gt;
+&lt;h2 id=&#34;a-vs-an&#34;&gt;&lt;em&gt;A&lt;/em&gt; vs &lt;em&gt;An&lt;/em&gt;&lt;/h2&gt;
+&lt;p&gt;Тут всё просто &amp;ndash; &lt;strong&gt;&lt;em&gt;a&lt;/em&gt;&lt;/strong&gt; используется в тех случаях, когда слово начинается на согласный звук, а &lt;strong&gt;&lt;em&gt;an&lt;/em&gt;&lt;/strong&gt; &amp;ndash; в тех, когда слово начинается на гласный звук.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Neovim: Минимализм &amp; Удобство</title>
+      <link>http://localhost:1313/me/blog/neovim-%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D0%B8%D0%B7%D0%BC--%D1%83%D0%B4%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%BE/</link>
+      <pubDate>Wed, 05 Feb 2025 10:58:47 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/neovim-%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D0%B8%D0%B7%D0%BC--%D1%83%D0%B4%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%BE/</guid>
+      <description>&lt;p&gt;&lt;img alt=&#34;Neovim &amp;lt;3&#34; loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/NeovimLove.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Расскажу о том, почему я использую Neovim как основной текстовый редактор, а также о том, как я им пользуюсь.&lt;/p&gt;
+&lt;h1 id=&#34;почему-neovim&#34;&gt;Почему Neovim?&lt;/h1&gt;
+&lt;p&gt;По сравнению с &lt;em&gt;VS Code&lt;/em&gt; и другими IDE, Neovim очень минималистичный и простой. Единственное, что нужно знать &amp;ndash; это то, какие клавиши за что отвечают.&lt;/p&gt;
+&lt;p&gt;После того как вы привыкаете к способу управления, появляется второе преимущество &amp;ndash; удобство. После этого вам будет не хватать vim-раскладки в обычных редакторах.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Читщит По Умным Указателям</title>
+      <link>http://localhost:1313/me/blog/%D1%87%D0%B8%D1%82%D1%89%D0%B8%D1%82-%D0%BF%D0%BE-%D1%83%D0%BC%D0%BD%D1%8B%D0%BC-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8F%D0%BC/</link>
+      <pubDate>Thu, 30 Jan 2025 18:14:34 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D1%87%D0%B8%D1%82%D1%89%D0%B8%D1%82-%D0%BF%D0%BE-%D1%83%D0%BC%D0%BD%D1%8B%D0%BC-%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8F%D0%BC/</guid>
+      <description>&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/ShootCpp.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Наглядная иллюстрация того, что может случиться с C++ программистами.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;В Rust необычная схема управления памятью. Он не использует сборщик мусора, как в Java и Go, что делает его быстрым. Скорость Rust сопоставима со скоростью C.&lt;/p&gt;
+&lt;p&gt;Однако и у этой схемы есть минусы. Для того чтобы их решить, были введены умные указатели, которые дают возможность оперировать памятью на низком уровне с тем же удобством.&lt;/p&gt;
+&lt;p&gt;В статье специально использованы простейшие примеры, чтобы понять их было легче.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Шахматный Английский</title>
+      <link>http://localhost:1313/me/blog/%D1%88%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D1%8B%D0%B9-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9/</link>
+      <pubDate>Thu, 16 Jan 2025 13:32:08 +0400</pubDate>
+      <guid>http://localhost:1313/me/blog/%D1%88%D0%B0%D1%85%D0%BC%D0%B0%D1%82%D0%BD%D1%8B%D0%B9-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9/</guid>
+      <description>&lt;p&gt;Сегодня разберём основные термины и понятия шахматного мира на английском. Узнав их, вы сможете без проблем понимать разговоры в контексте шахмат.&lt;/p&gt;
+&lt;h1 id=&#34;что-за-pieces&#34;&gt;Что за pieces?&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Pieces&lt;/em&gt; &amp;ndash; &lt;em&gt;фигуры&lt;/em&gt;. В шахматах их 6 видов.&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/me/ChessPieces.png&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;king&lt;/em&gt; &amp;ndash; &lt;em&gt;король&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;queen&lt;/em&gt; &amp;ndash; &lt;em&gt;ферзь&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;rook&lt;/em&gt; &amp;ndash; &lt;em&gt;ладья&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;bishop&lt;/em&gt; &amp;ndash; &lt;em&gt;слон&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;knight&lt;/em&gt; &amp;ndash; &lt;em&gt;конь&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;pawn&lt;/em&gt; &amp;ndash; &lt;em&gt;пешка&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;У коня есть и второе название &amp;ndash; &lt;em&gt;horse&lt;/em&gt;, то есть &lt;em&gt;лошадка&lt;/em&gt;. Также, иногда вместо &lt;em&gt;rook&lt;/em&gt; используется &lt;em&gt;castle&lt;/em&gt;, что означает &lt;em&gt;замок&lt;/em&gt; или &lt;em&gt;башня&lt;/em&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Как Научиться Понимать Английскую Речь?</title>
-      <link>//localhost:1313/blog/%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%83%D1%87%D0%B8%D1%82%D1%8C%D1%81%D1%8F-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D1%83%D1%8E-%D1%80%D0%B5%D1%87%D1%8C/</link>
+      <link>http://localhost:1313/me/blog/%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%83%D1%87%D0%B8%D1%82%D1%8C%D1%81%D1%8F-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D1%83%D1%8E-%D1%80%D0%B5%D1%87%D1%8C/</link>
       <pubDate>Thu, 09 Jan 2025 14:12:59 +0400</pubDate>
-      <guid>//localhost:1313/blog/%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%83%D1%87%D0%B8%D1%82%D1%8C%D1%81%D1%8F-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D1%83%D1%8E-%D1%80%D0%B5%D1%87%D1%8C/</guid>
+      <guid>http://localhost:1313/me/blog/%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%83%D1%87%D0%B8%D1%82%D1%8C%D1%81%D1%8F-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D1%83%D1%8E-%D1%80%D0%B5%D1%87%D1%8C/</guid>
       <description>&lt;p&gt;Умение понимать английскую речь позволяет смотреть и слушать огромное количество материалов в интернете. В этой статье я поделюсь своим опытом того, как можно научиться понимать английскую речь без значительных усилий.&lt;/p&gt;
 &lt;h1 id=&#34;мотивация&#34;&gt;Мотивация&lt;/h1&gt;
 &lt;p&gt;На мой взгляд, чтобы изучать английский язык, он должен вам нравиться. Увлечение темой или культурой, связанной с языком, значительно упростит обучение. Такая мотивация помогает сохранять интерес на долгих дистанциях.&lt;/p&gt;
@@ -22,10 +145,10 @@
 &lt;p&gt;Я слушаю музыку только на английском. Это позволяет мне погружаться в язык, учитывая, что я меломан. Это не только доставляет удовольствие, но и улучшает восприятие на слух.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Всё, Что Нужно Знать Чтобы Понимать Reddit</title>
-      <link>//localhost:1313/blog/%D0%B2%D1%81%D1%91-%D1%87%D1%82%D0%BE-%D0%BD%D1%83%D0%B6%D0%BD%D0%BE-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D1%87%D1%82%D0%BE%D0%B1%D1%8B-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-reddit/</link>
+      <title>Всё, Что Нужно Знать, Чтобы Понимать Reddit</title>
+      <link>http://localhost:1313/me/blog/%D0%B2%D1%81%D1%91-%D1%87%D1%82%D0%BE-%D0%BD%D1%83%D0%B6%D0%BD%D0%BE-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D1%87%D1%82%D0%BE%D0%B1%D1%8B-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-reddit/</link>
       <pubDate>Tue, 07 Jan 2025 22:28:40 +0400</pubDate>
-      <guid>//localhost:1313/blog/%D0%B2%D1%81%D1%91-%D1%87%D1%82%D0%BE-%D0%BD%D1%83%D0%B6%D0%BD%D0%BE-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D1%87%D1%82%D0%BE%D0%B1%D1%8B-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-reddit/</guid>
+      <guid>http://localhost:1313/me/blog/%D0%B2%D1%81%D1%91-%D1%87%D1%82%D0%BE-%D0%BD%D1%83%D0%B6%D0%BD%D0%BE-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D1%87%D1%82%D0%BE%D0%B1%D1%8B-%D0%BF%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D1%8C-reddit/</guid>
       <description>&lt;p&gt;Я люблю читать Reddit. Но на нём часто попадаются сокращения, непонятные для меня. Вместе с друзьями из США собрал все актуальные сокращения в одной статье.&lt;/p&gt;
 &lt;h1 id=&#34;однобуквенные-сокращения&#34;&gt;Однобуквенные сокращения&lt;/h1&gt;
 &lt;ul&gt;
