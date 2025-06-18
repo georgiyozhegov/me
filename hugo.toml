@@ -34,6 +34,7 @@ description = "Мой личный блог о программировании 
 author = "Георгий Ожегов"
 
 [params.assets]
+favicon = "/me/favicon/favicon.ico"
 favicon16x16 = "/me/favicon/favicon-16x16.png"
 favicon32x32 = "/me/favicon/favicon-32x32.png"
 apple_touch_icon = "/me/favicon/apple-icon.png"
@@ -57,3 +58,7 @@ url = "https://t.me/thegblog"
 [[params.socialIcons]]
 name = "GitHub"
 url = "https://github.com/georgiyozhegov"
+
+[[params.socialIcons]]
+name = "Habr"
+url = "https://habr.com/ru/users/georgiyozhegov"
