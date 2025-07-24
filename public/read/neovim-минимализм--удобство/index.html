@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(99441177, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99441177" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Neovim: Минимализм &amp; Удобство | GБлог</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+Расскажу о том, почему я использую Neovim как основной текстовый редактор, а также о том, как я им пользуюсь.
+Почему Neovim?
+По сравнению с VS Code и другими IDE, Neovim очень минималистичный и простой. Единственное, что нужно знать &ndash; это то, какие клавиши за что отвечают.
+После того как вы привыкаете к способу управления, появляется второе преимущество &ndash; удобство. После этого вам будет не хватать vim-раскладки в обычных редакторах.">
+<meta name="author" content="Георгий Ожегов">
+<link rel="canonical" href="http://localhost:1313/read/neovim-%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D0%B8%D0%B7%D0%BC--%D1%83%D0%B4%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%BE/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d5fd44b0acb2cb11f64c6ad0d8435ca6bf66f3a561f28164769897b2bdb2057a.css" integrity="sha256-1f1EsKyyyxH2TGrQ2ENcpr9m86Vh8oFkdpiXsr2yBXo=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon/apple-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ru" href="http://localhost:1313/read/neovim-%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D0%B8%D0%B7%D0%BC--%D1%83%D0%B4%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%BE/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="GБлог (Alt + H)">GБлог</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Neovim: Минимализм &amp; Удобство
+    </h1>
+    <div class="post-meta"><span title='2025-02-05 10:58:47 +0400 +04'>февраля 5, 2025</span>&nbsp;·&nbsp;4 минуты&nbsp;·&nbsp;Георгий Ожегов
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Оглавление</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d0%bf%d0%be%d1%87%d0%b5%d0%bc%d1%83-neovim" aria-label="Почему Neovim?">Почему Neovim?</a><ul>
+                        
+                <li>
+                    <a href="#%d0%b2%d0%be%d0%bf%d1%80%d0%be%d1%81-%d0%bd%d0%b5-%d0%b2-%d1%81%d0%ba%d0%be%d1%80%d0%be%d1%81%d1%82%d0%b8" aria-label="Вопрос не в скорости">Вопрос не в скорости</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d1%87%d0%b8%d1%82%d1%89%d0%b8%d1%82-%d0%b4%d0%bb%d1%8f-%d0%bb%d0%b5%d0%bd%d0%b8%d0%b2%d1%8b%d1%85" aria-label="Читщит для ленивых">Читщит для ленивых</a></li>
+                <li>
+                    <a href="#%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0" aria-label="Настройка">Настройка</a></li>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%bc%d0%b0%d0%bd%d0%b4%d1%8b" aria-label="Команды">Команды</a><ul>
+                        
+                <li>
+                    <a href="#normal" aria-label="NORMAL">NORMAL</a><ul>
+                        
+                <li>
+                    <a href="#%d0%bf%d0%b5%d1%80%d0%b5%d0%bc%d0%b5%d1%89%d0%b5%d0%bd%d0%b8%d0%b5" aria-label="Перемещение">Перемещение</a></li>
+                <li>
+                    <a href="#%d0%be%d0%ba%d0%bd%d0%b0" aria-label="Окна">Окна</a></li>
+                <li>
+                    <a href="#%d0%b2%d1%81%d1%82%d0%b0%d0%b2%d0%ba%d0%b0--%d1%83%d0%b4%d0%b0%d0%bb%d0%b5%d0%bd%d0%b8%d0%b5" aria-label="Вставка &amp; удаление">Вставка &amp; удаление</a></li>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%bf%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5" aria-label="Копирование">Копирование</a></li></ul>
+                </li>
+                <li>
+                    <a href="#visual" aria-label="VISUAL">VISUAL</a></li>
+                <li>
+                    <a href="#insert" aria-label="INSERT">INSERT</a></li>
+                <li>
+                    <a href="#command" aria-label="COMMAND">COMMAND</a><ul>
+                        
+                <li>
+                    <a href="#%d0%b7%d0%b0%d0%bc%d0%b5%d0%bd%d0%b0-%d1%82%d0%b5%d0%ba%d1%81%d1%82%d0%b0" aria-label="Замена текста">Замена текста</a></li></ul>
+                </li>
+                <li>
+                    <a href="#search" aria-label="SEARCH">SEARCH</a><ul>
+                        
+                <li>
+                    <a href="#telescope" aria-label="Telescope">Telescope</a></li>
+                <li>
+                    <a href="#live-grep" aria-label="Live Grep">Live Grep</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%d0%b5%d1%89%d1%91-%d0%bf%d0%bb%d1%8e%d1%88%d0%ba%d0%b8" aria-label="Ещё плюшки">Ещё плюшки</a><ul>
+                        
+                <li>
+                    <a href="#%d0%b2%d1%81%d1%82%d1%80%d0%be%d0%b5%d0%bd%d0%bd%d1%8b%d0%b9-%d1%82%d0%b5%d1%80%d0%bc%d0%b8%d0%bd%d0%b0%d0%bb" aria-label="Встроенный терминал">Встроенный терминал</a></li>
+                <li>
+                    <a href="#%d0%be%d1%82%d0%ba%d1%80%d1%8b%d1%82%d0%b8%d0%b5-%d0%b1%d0%be%d0%bb%d1%8c%d1%88%d0%b8%d1%85-%d1%84%d0%b0%d0%b9%d0%bb%d0%be%d0%b2" aria-label="Открытие больших файлов">Открытие больших файлов</a></li>
+                <li>
+                    <a href="#gui-%d0%b2%d0%b5%d1%80%d1%81%d0%b8%d1%8f" aria-label="GUI версия">GUI версия</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d0%ba%d0%b0%d0%ba-%d0%b2%d1%8b%d0%b9%d1%82%d0%b8" aria-label="Как выйти?">Как выйти?</a></li>
+                <li>
+                    <a href="#wq" aria-label=":wq">:wq</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><img alt="Neovim &lt;3" loading="lazy" src="/NeovimLove.png"></p>
+<p>Расскажу о том, почему я использую Neovim как основной текстовый редактор, а также о том, как я им пользуюсь.</p>
+<h1 id="почему-neovim">Почему Neovim?<a hidden class="anchor" aria-hidden="true" href="#почему-neovim">#</a></h1>
+<p>По сравнению с <em>VS Code</em> и другими IDE, Neovim очень минималистичный и простой. Единственное, что нужно знать &ndash; это то, какие клавиши за что отвечают.</p>
+<p>После того как вы привыкаете к способу управления, появляется второе преимущество &ndash; удобство. После этого вам будет не хватать vim-раскладки в обычных редакторах.</p>
+<h2 id="вопрос-не-в-скорости">Вопрос не в скорости<a hidden class="anchor" aria-hidden="true" href="#вопрос-не-в-скорости">#</a></h2>
+<p>Хоть vim-раскладка увеличивает скорость печати, это не главное, так как при 10 часах дебага она вам не поможет. Дело тут именно в удобстве.</p>
+<h1 id="читщит-для-ленивых">Читщит для ленивых<a hidden class="anchor" aria-hidden="true" href="#читщит-для-ленивых">#</a></h1>
+<table>
+  <thead>
+      <tr>
+          <th>Команда</th>
+          <th>Действие</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Esc</code></td>
+          <td>перейти в <em>NORMAL</em> режим</td>
+      </tr>
+      <tr>
+          <td><code>hjkl</code></td>
+          <td>перемещение</td>
+      </tr>
+      <tr>
+          <td><code>Ctrl-d/u</code></td>
+          <td>пол страницы вверх/вниз</td>
+      </tr>
+      <tr>
+          <td><code>gg/G</code></td>
+          <td>вверх/низ файла</td>
+      </tr>
+      <tr>
+          <td><code>yy/p</code></td>
+          <td>скопировать/вставить строчку</td>
+      </tr>
+      <tr>
+          <td><code>o/O</code></td>
+          <td>вставить пустую строчку снизу</td>
+      </tr>
+      <tr>
+          <td><code>I/A</code></td>
+          <td>переход в начало/конец строки</td>
+      </tr>
+      <tr>
+          <td><code>:w(q)</code></td>
+          <td>сохранить (и выйти)</td>
+      </tr>
+      <tr>
+          <td><code>:q!</code></td>
+          <td>выйти без сохранения</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="настройка">Настройка<a hidden class="anchor" aria-hidden="true" href="#настройка">#</a></h1>
+<p>По настройке Neovim очень много статей, инструкций и т.д. Я опишу только свою конфигурацию.</p>
+<p>Как я уже сказал, я люблю минимализм.</p>
+<p>Из плагинов использую <em>Telescope</em> для навигации по проекту, <em>Treesitter</em> для подсветки синтаксиса и LSP для автодополнения и аннотаций. В качестве темы использую <em>Gruvbox</em>.</p>
+<p><img alt="Моя конфигурация" loading="lazy" src="/NeovimConfig.png"></p>
+<p><a href="https://github.com/georgiyozhegov/configuration/blob/master/nvim">GitHub с конфигурацией</a> если вам интересно.</p>
+<h1 id="команды">Команды<a hidden class="anchor" aria-hidden="true" href="#команды">#</a></h1>
+<p>Единственная сложность при знакомстве с Neovim &ndash; vim-раскладка.</p>
+<p>В Neovim есть 5 режимов. Каждый из них нужен для выполнения какой-то отдельной задачи.</p>
+<h2 id="normal"><em>NORMAL</em><a hidden class="anchor" aria-hidden="true" href="#normal">#</a></h2>
+<p>Основной режим. Для перехода в него нажмите либо <code>Esc</code> либо <code>Ctrl-c</code>.</p>
+<h3 id="перемещение">Перемещение<a hidden class="anchor" aria-hidden="true" href="#перемещение">#</a></h3>
+<ul>
+<li><code>h</code> &ndash; влево</li>
+<li><code>j</code> &ndash; вниз</li>
+<li><code>k</code> &ndash; вверх</li>
+<li><code>l</code> &ndash; вправо</li>
+<li><code>Ctrl-d</code> &ndash; пол страницы вниз</li>
+<li><code>Ctrl-u</code> &ndash; пол страницы вверх</li>
+<li><code>I</code> &ndash; в начало строки</li>
+<li><code>A</code> &ndash; в конце строки</li>
+<li><code>gg</code> &ndash; в начало файла</li>
+<li><code>G</code> &ndash; в низ файла</li>
+</ul>
+<h3 id="окна">Окна<a hidden class="anchor" aria-hidden="true" href="#окна">#</a></h3>
+<p>Экран можно разделить на несколько частей. Для того чтобы разделить экран вертикально, напишите <code>:vs</code>, а для горизонтального разделения &ndash; <code>:sp</code>.</p>
+<p><img alt="Разделение экрана" loading="lazy" src="/NeovimSplit.png"></p>
+<p>Для перемещения между окнами у меня настроены эти клавиши.</p>
+<ul>
+<li><code>wh</code> &ndash; перейти в окно слева</li>
+<li><code>wj</code> &ndash; перейти в окно снизу</li>
+<li><code>wk</code> &ndash; перейти в окно сверху</li>
+<li><code>wl</code> &ndash; перейти в окно справа</li>
+</ul>
+<h3 id="вставка--удаление">Вставка &amp; удаление<a hidden class="anchor" aria-hidden="true" href="#вставка--удаление">#</a></h3>
+<ul>
+<li><code>o</code> &ndash; вставить пустую линию под текущей</li>
+<li><code>O</code> &ndash; вставить пустую линию над текущей</li>
+<li><code>dd</code> &ndash; удалить линию</li>
+</ul>
+<h3 id="копирование">Копирование<a hidden class="anchor" aria-hidden="true" href="#копирование">#</a></h3>
+<ul>
+<li><code>yy</code> &ndash; скопировать линию в буфер обмена</li>
+<li><code>p</code> &ndash; вставить скопированное</li>
+</ul>
+<p>При удалении чего-либо, удаленный текст копируется в буфер обмена.</p>
+<h2 id="visual"><em>VISUAL</em><a hidden class="anchor" aria-hidden="true" href="#visual">#</a></h2>
+<p>Позволяет выделять текст и манипулировать им.</p>
+<p>Для того чтобы выделить текст, нажмите <code>v</code> в режиме <em>NORMAL</em>. Также, можно выделить всю линию, для этого нажмите <code>V</code>.</p>
+<p>После выделения можно приступить к его редактированию.</p>
+<ul>
+<li><code>d</code> &ndash; удалить</li>
+<li><code>u</code> &ndash; перевести в нижний регистр</li>
+<li><code>U</code> &ndash; перевести в верхний регистр</li>
+<li><code>y</code> &ndash; скопировать в буфер обмена</li>
+<li><code>p</code> &ndash; вставить текст из буфера вместо выделенного текста.</li>
+</ul>
+<h2 id="insert"><em>INSERT</em><a hidden class="anchor" aria-hidden="true" href="#insert">#</a></h2>
+<p>Обычный режим для набора текста. Тоже что и в других редакторах.</p>
+<p>Чтобы вернутся в <em>NORMAL</em>, нужно нажать <code>Esc</code>.</p>
+<h2 id="command"><em>COMMAND</em><a hidden class="anchor" aria-hidden="true" href="#command">#</a></h2>
+<p>Перейти в него можно нажав <code>:</code> в <em>NORMAL</em> режиме. После каждой команды для выполнения нужно нажимать <code>Enter</code>.</p>
+<ul>
+<li><code>w</code> &ndash; сохранить файл</li>
+<li><code>wq</code> &ndash; сохранить и выйти</li>
+<li><code>q!</code> &ndash; выйти без сохранения</li>
+</ul>
+<h3 id="замена-текста">Замена текста<a hidden class="anchor" aria-hidden="true" href="#замена-текста">#</a></h3>
+<p>Находясь в <em>VISUAL</em> режиме, напечатайте <code>:s/</code>, впишите текст или регулярное выражение которое хотите заменить, потом <code>/</code> и текст на который хотите изменить.</p>
+<p><img alt="Замена текста" loading="lazy" src="/NeovimReplace.png"></p>
+<h2 id="search"><em>SEARCH</em><a hidden class="anchor" aria-hidden="true" href="#search">#</a></h2>
+<p>Нажмите <code>/</code> и впишите то, что хотите найти. После этого нажмите <code>Enter</code> и перемещайтесь по найденным результатам с помощью <code>n</code>.</p>
+<h3 id="telescope"><em>Telescope</em><a hidden class="anchor" aria-hidden="true" href="#telescope">#</a></h3>
+<p>Помогает искать файлы по названию. Я долгое время использовал <em>Nvimtree</em>, но после того как установил Telescope нужда в нём пропала.</p>
+<h3 id="live-grep"><em>Live Grep</em><a hidden class="anchor" aria-hidden="true" href="#live-grep">#</a></h3>
+<p><em>Live Grep</em> &ndash; плагин, дополняющий <em>Telescope</em>, который помогает искать код по всей кодовой базе с молниеносной скоростью.</p>
+<p><img alt="Live Grep" loading="lazy" src="/NeovimLiveGrep.png"></p>
+<h1 id="ещё-плюшки">Ещё плюшки<a hidden class="anchor" aria-hidden="true" href="#ещё-плюшки">#</a></h1>
+<h2 id="встроенный-терминал">Встроенный терминал<a hidden class="anchor" aria-hidden="true" href="#встроенный-терминал">#</a></h2>
+<p>Для вызова напишите <code>:te</code>. В этом же окне откроется терминал, с возможностью использования vim-раскладки.</p>
+<p><img alt="Встроенный терминал" loading="lazy" src="/NeovimTerminal.png"></p>
+<h2 id="открытие-больших-файлов">Открытие больших файлов<a hidden class="anchor" aria-hidden="true" href="#открытие-больших-файлов">#</a></h2>
+<p>При открытии больших файлов редактор можно запускать в чистом виде без плагинов, затормаживающих открытие и редактирование.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>nvim --clean
+</span></span></code></pre></div><h2 id="gui-версия">GUI версия<a hidden class="anchor" aria-hidden="true" href="#gui-версия">#</a></h2>
+<p>Иногда использую GUI версию Neovim под названием <a href="https://github.com/neovide/neovide"><em>Neovide</em></a>. Люблю его из-за очень красивой анимации перемещения курсора и того что он написан на Rust.</p>
+<h1 id="как-выйти">Как выйти?<a hidden class="anchor" aria-hidden="true" href="#как-выйти">#</a></h1>
+<p>Если вам нужно выйти из редактора, просто наберите <code>:q!</code>.</p>
+<h1 id="wq">:wq<a hidden class="anchor" aria-hidden="true" href="#wq">#</a></h1>
+<p>Надеюсь статья была полезной. Больше статей в <a href="https://t.thegblog">моём блоге</a>.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">GБлог</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

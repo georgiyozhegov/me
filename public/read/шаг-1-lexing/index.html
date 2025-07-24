@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(99441177, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99441177" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Шаг 1: Lexing | GБлог</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+Это первая статья из серии про процесс компиляции, в которой каждый этап описывается по отдельности. Перед прочтением советую прочитать предыдущую обзорную статью, описывающую весь процесс в общих чертах, которую можно найти здесь.
+Относительно других этапов, лексический анализ &ndash; самый простой, хотя и может показаться сложным на первый взгляд, поэтому эта статья будет самой короткой из серии.
+Весь код взят из этого репозитория и упрощен, для лучшего понимания.
+Код
+source.txt
+Для примера возьмем небольшой фрагмент кода на вымышленном языке программирования.">
+<meta name="author" content="Георгий Ожегов">
+<link rel="canonical" href="http://localhost:1313/read/%D1%88%D0%B0%D0%B3-1-lexing/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d5fd44b0acb2cb11f64c6ad0d8435ca6bf66f3a561f28164769897b2bdb2057a.css" integrity="sha256-1f1EsKyyyxH2TGrQ2ENcpr9m86Vh8oFkdpiXsr2yBXo=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon/apple-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ru" href="http://localhost:1313/read/%D1%88%D0%B0%D0%B3-1-lexing/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="GБлог (Alt + H)">GБлог</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Шаг 1: Lexing
+    </h1>
+    <div class="post-meta"><span title='2025-03-12 16:35:41 +0400 +04'>марта 12, 2025</span>&nbsp;·&nbsp;4 минуты&nbsp;·&nbsp;Георгий Ожегов
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Оглавление</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%b4" aria-label="Код">Код</a></li>
+                <li>
+                    <a href="#%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba" aria-label="Запуск!">Запуск!</a></li>
+                <li>
+                    <a href="#%d0%b7%d0%b0%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d0%b5" aria-label="Заключение">Заключение</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><img loading="lazy" src="/LexCover.png"></p>
+<p>Это первая статья из серии про процесс компиляции, в которой каждый этап описывается по отдельности. Перед прочтением советую прочитать предыдущую обзорную статью, описывающую весь процесс в общих чертах, которую можно <a href="https://georgiyozhegov.github.io/blog/%D0%BF%D1%83%D1%82%D1%8C-%D0%BE%D1%82-%D0%BA%D0%BE%D0%B4%D0%B0-%D0%B4%D0%BE-%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D0%BE%D0%B3%D0%BE-%D1%84%D0%B0%D0%B9%D0%BB%D0%B0/">найти здесь</a>.</p>
+<p>Относительно других этапов, лексический анализ &ndash; самый простой, хотя и может показаться сложным на первый взгляд, поэтому эта статья будет самой короткой из серии.</p>
+<p>Весь код взят из <a href="https://github.com/georgiyozhegov/mellow/tree/master/lib/syntax/src/lex">этого репозитория</a> и упрощен, для лучшего понимания.</p>
+<h1 id="код">Код<a hidden class="anchor" aria-hidden="true" href="#код">#</a></h1>
+<p><strong><em>source.txt</em></strong></p>
+<p>Для примера возьмем небольшой фрагмент кода на вымышленном языке программирования.</p>
+<pre tabindex="0"><code>let a = 10 + 2
+if a &gt; 8 then
+    debug &#34;A больше 8&#34;
+else
+    debug &#34;А либо меньше, либо равно 8&#34;
+end
+</code></pre><p><strong><em>src/main.rs</em></strong></p>
+<p>Читаем исходный код из файла и создаём итератор по символам. Метод <code>.peekable()</code> даёт возможность &ldquo;заглядывать&rdquo; на один символ вперёд.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> source <span style="color:#f92672">=</span> fs::read_to_string(<span style="color:#e6db74">&#34;source.txt&#34;</span>).unwrap();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> source <span style="color:#f92672">=</span> source.chars().peekable();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Определим тип токена.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[derive(Debug)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">Token</span> {
+</span></span><span style="display:flex;"><span>    Integer(<span style="color:#66d9ef">i64</span>),
+</span></span><span style="display:flex;"><span>    Identifier(String),
+</span></span><span style="display:flex;"><span>    String(String),
+</span></span><span style="display:flex;"><span>    Equal,
+</span></span><span style="display:flex;"><span>    Plus,
+</span></span><span style="display:flex;"><span>    Greater,
+</span></span><span style="display:flex;"><span>    Let,
+</span></span><span style="display:flex;"><span>    If,
+</span></span><span style="display:flex;"><span>    Then,
+</span></span><span style="display:flex;"><span>    Else,
+</span></span><span style="display:flex;"><span>    End,
+</span></span><span style="display:flex;"><span>    Debug,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Создадим структуру, которая будет содержать всю логику лексера. <code>Source</code> &ndash; символы, которые подаются на вход.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Source</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;s</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">=</span> Peekable<span style="color:#f92672">&lt;</span>Chars<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;s</span><span style="color:#f92672">&gt;&gt;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Lex</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;l</span><span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    source: <span style="color:#a6e22e">Source</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;l</span><span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;l</span><span style="color:#f92672">&gt;</span> Lex<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;l</span><span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pub</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">new</span>(source: <span style="color:#a6e22e">Source</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">&#39;l</span><span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Self</span> {
+</span></span><span style="display:flex;"><span>        Self { source }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Для улучшения читаемости кода определим макросы различных категорий символов.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>macro_rules<span style="color:#f92672">!</span> numeric {
+</span></span><span style="display:flex;"><span>    () <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;0&#39;</span><span style="color:#f92672">..=</span><span style="color:#e6db74">&#39;9&#39;</span> <span style="color:#75715e">// паттерн чисел
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    };
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>macro_rules<span style="color:#f92672">!</span> alphabetic {
+</span></span><span style="display:flex;"><span>    () <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">..=</span><span style="color:#e6db74">&#39;z&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">..=</span><span style="color:#e6db74">&#39;Z&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;_&#39;</span> <span style="color:#75715e">// паттерн идентификаторов
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    };
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>macro_rules<span style="color:#f92672">!</span> skip {
+</span></span><span style="display:flex;"><span>    () <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;\t&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;\n&#39;</span> <span style="color:#75715e">// паттерн пробела и других пропускаемых символов
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    };
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Реализуем <code>Iterator</code> для лексера, чтобы можно было обрабатывать выходные токены в виде потока.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Iterator <span style="color:#66d9ef">for</span> Lex<span style="color:#f92672">&lt;</span>&#39;_<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Item</span> <span style="color:#f92672">=</span> Token;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">next</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self) -&gt; Option<span style="color:#f92672">&lt;</span>Self::Item<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> self.source.peek()<span style="color:#f92672">?</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">numeric!</span>() <span style="color:#f92672">=&gt;</span> Some(self.numeric()),
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">alphabetic!</span>() <span style="color:#f92672">=&gt;</span> Some(self.alphabetic()),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;&#34;&#39;</span> <span style="color:#f92672">=&gt;</span> Some(self.string()),
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">skip!</span>() <span style="color:#f92672">=&gt;</span> self.skip(),
+</span></span><span style="display:flex;"><span>            _ <span style="color:#f92672">=&gt;</span> Some(self.single()),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Здесь мы проверяем следующий символ и определяем какой токен будем обрабатывать. Например, если следующий символ &ndash; <code>&quot;</code>, выходным токеном будет <code>String</code>, то есть строка.</p>
+<p>Добавим вывод токенов при итерации по <code>Lex</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> source <span style="color:#f92672">=</span> fs::read_to_string(<span style="color:#e6db74">&#34;source.txt&#34;</span>).unwrap();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> source <span style="color:#f92672">=</span> source.chars().peekable();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> token <span style="color:#66d9ef">in</span> Lex::new(source) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">println!</span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{token:?}</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Теперь напишем методы для сбора токенов из символов.</p>
+<p><strong>Функция для целых чисел.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Lex<span style="color:#f92672">&lt;</span>&#39;_<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">numeric</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self) -&gt; <span style="color:#a6e22e">Token</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> buffer <span style="color:#f92672">=</span> self.take_while(<span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> <span style="color:#a6e22e">matches!</span>(c, <span style="color:#a6e22e">numeric!</span>()));
+</span></span><span style="display:flex;"><span>        Token::Integer(buffer.parse().unwrap())
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>В коде используется функция <code>take_while</code>, которая собирает в буфер все символы, которые попадают под правило, передаваемое как аргумент.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Lex<span style="color:#f92672">&lt;</span>&#39;_<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">take_while</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self, predicate: <span style="color:#a6e22e">fn</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">char</span>) -&gt; <span style="color:#66d9ef">bool</span>) -&gt; String {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> output <span style="color:#f92672">=</span> String::new();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">let</span> Some(c) <span style="color:#f92672">=</span> self.source.peek() {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">!</span>predicate(c) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            output.push(<span style="color:#f92672">*</span>c);
+</span></span><span style="display:flex;"><span>            self.source.next();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        output
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Функция для идентификаторов и ключевых слов.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">keyword</span>(buffer: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">str</span>) -&gt; Option<span style="color:#f92672">&lt;</span>Token<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> buffer {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;let&#34;</span> <span style="color:#f92672">=&gt;</span> Some(Token::Let),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;if&#34;</span> <span style="color:#f92672">=&gt;</span> Some(Token::If),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;then&#34;</span> <span style="color:#f92672">=&gt;</span> Some(Token::Then),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;else&#34;</span> <span style="color:#f92672">=&gt;</span> Some(Token::Else),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;end&#34;</span> <span style="color:#f92672">=&gt;</span> Some(Token::End),
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;debug&#34;</span> <span style="color:#f92672">=&gt;</span> Some(Token::Debug),
+</span></span><span style="display:flex;"><span>            _ <span style="color:#f92672">=&gt;</span> None,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">alphabetic</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self) -&gt; <span style="color:#a6e22e">Token</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> buffer <span style="color:#f92672">=</span> self.take_while(<span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> <span style="color:#a6e22e">matches!</span>(c, <span style="color:#a6e22e">alphabetic!</span>() <span style="color:#f92672">|</span> <span style="color:#a6e22e">numeric!</span>()));
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> Some(token) <span style="color:#f92672">=</span> Self::keyword(<span style="color:#f92672">&amp;</span>buffer) {
+</span></span><span style="display:flex;"><span>            token
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            Token::Identifier(buffer)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>Если <code>buffer</code> соответствует какому-то ключевому слову, возвращаем его, а иначе &ndash; идентификатор.</p>
+<p><strong>Функция для обработки строк.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">string</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self) -&gt; <span style="color:#a6e22e">Token</span> {
+</span></span><span style="display:flex;"><span>        self.source.next(); <span style="color:#75715e">// пропускаем &#39;&#34;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">let</span> buffer <span style="color:#f92672">=</span> self.take_while(<span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> <span style="color:#f92672">*</span>c <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;&#34;&#39;</span>);
+</span></span><span style="display:flex;"><span>        self.source.next(); <span style="color:#75715e">// пропускаем &#39;&#34;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        Token::String(buffer)
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>Собираем все символы между кавычками, пропуская их самих.</p>
+<p><strong>Пропуск незначимых символов.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">skip</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self) -&gt; Option<span style="color:#f92672">&lt;</span>Token<span style="color:#f92672">&gt;</span> {
+</span></span><span style="display:flex;"><span>        self.take_while(<span style="color:#f92672">|</span>c<span style="color:#f92672">|</span> <span style="color:#a6e22e">matches!</span>(c, <span style="color:#a6e22e">skip!</span>()));
+</span></span><span style="display:flex;"><span>        self.next()
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>Пропускаем все пробельные символы и рекурсивно вызываем <code>self.next()</code> для того, чтобы получить следующий токен.</p>
+<p><strong>Обработка одиночных символов.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">single</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self) -&gt; <span style="color:#a6e22e">Token</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> self.source.next().unwrap() {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;+&#39;</span> <span style="color:#f92672">=&gt;</span> Token::Plus,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;&gt;&#39;</span> <span style="color:#f92672">=&gt;</span> Token::Greater,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;=&#39;</span> <span style="color:#f92672">=&gt;</span> Token::Equal,
+</span></span><span style="display:flex;"><span>            c <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">panic!</span>(<span style="color:#e6db74">&#34;Неизвестный символ: &#39;</span><span style="color:#e6db74">{c}</span><span style="color:#e6db74">&#39;&#34;</span>),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Для однозначных токенов, таких как операторы, просто сопоставляем символ с соответствующим токеном. А если символ неизвестен &ndash; паникуем (не делайте так в проде).</p>
+<h1 id="запуск">Запуск!<a hidden class="anchor" aria-hidden="true" href="#запуск">#</a></h1>
+<p>Компилируем код и запускаем.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo run
+</span></span></code></pre></div><p><strong>Выход</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Let
+</span></span><span style="display:flex;"><span>Identifier<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;a&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Equal
+</span></span><span style="display:flex;"><span>Integer<span style="color:#f92672">(</span>10<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Plus
+</span></span><span style="display:flex;"><span>Integer<span style="color:#f92672">(</span>2<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>If
+</span></span><span style="display:flex;"><span>Identifier<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;a&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Greater
+</span></span><span style="display:flex;"><span>Integer<span style="color:#f92672">(</span>8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Then
+</span></span><span style="display:flex;"><span>Debug
+</span></span><span style="display:flex;"><span>String<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;A больше 8&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Else
+</span></span><span style="display:flex;"><span>Debug
+</span></span><span style="display:flex;"><span>String<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;А либо меньше, либо равно 8&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>End
+</span></span></code></pre></div><p>Все работает!</p>
+<h1 id="заключение">Заключение<a hidden class="anchor" aria-hidden="true" href="#заключение">#</a></h1>
+<p>Надеюсь, статья была интересной, а самое главное &ndash; полезной. Если что-то непонятно &ndash; пишите в комментарии или мне в личные сообщения чтобы я мог вам это объяснить.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">GБлог</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

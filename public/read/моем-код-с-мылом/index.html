@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(99441177, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99441177" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Моем Код с Мылом | GБлог</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+Эта статья &ndash; краткий обзор первой половины книги Чистый код.
+Разберём ключевые принципы именования переменных, проектирования функций и других аспектов, чтобы писать код, который будет понятен вам и вашей команде спустя годы.
+Для самых нетерпеливых
+Основные тезисы для тех, кто не хочет читать эту прекрасную статью целиком.
+
+Думайте над именами
+Не делайте код слишком чистым
+Следуйте стандартам языка или вашей команды
+Программист не должен заниматься форматированием
+
+Чистый vs грязный код
+Чистый код легко читается, изменятся и поддерживается. Это тот код, с которым легко работать и вносить новый функционал.">
+<meta name="author" content="Георгий Ожегов">
+<link rel="canonical" href="http://localhost:1313/read/%D0%BC%D0%BE%D0%B5%D0%BC-%D0%BA%D0%BE%D0%B4-%D1%81-%D0%BC%D1%8B%D0%BB%D0%BE%D0%BC/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d5fd44b0acb2cb11f64c6ad0d8435ca6bf66f3a561f28164769897b2bdb2057a.css" integrity="sha256-1f1EsKyyyxH2TGrQ2ENcpr9m86Vh8oFkdpiXsr2yBXo=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon/apple-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="ru" href="http://localhost:1313/read/%D0%BC%D0%BE%D0%B5%D0%BC-%D0%BA%D0%BE%D0%B4-%D1%81-%D0%BC%D1%8B%D0%BB%D0%BE%D0%BC/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="GБлог (Alt + H)">GБлог</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Моем Код с Мылом
+    </h1>
+    <div class="post-meta"><span title='2025-02-14 17:14:31 +0400 +04'>февраля 14, 2025</span>&nbsp;·&nbsp;4 минуты&nbsp;·&nbsp;Георгий Ожегов
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Оглавление</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%d0%b4%d0%bb%d1%8f-%d1%81%d0%b0%d0%bc%d1%8b%d1%85-%d0%bd%d0%b5%d1%82%d0%b5%d1%80%d0%bf%d0%b5%d0%bb%d0%b8%d0%b2%d1%8b%d1%85" aria-label="Для самых нетерпеливых">Для самых нетерпеливых</a></li>
+                <li>
+                    <a href="#%d1%87%d0%b8%d1%81%d1%82%d1%8b%d0%b9-vs-%d0%b3%d1%80%d1%8f%d0%b7%d0%bd%d1%8b%d0%b9-%d0%ba%d0%be%d0%b4" aria-label="Чистый vs грязный код">Чистый vs грязный код</a></li>
+                <li>
+                    <a href="#%d0%bf%d1%80%d0%b8%d0%bd%d1%86%d0%b8%d0%bf%d1%8b" aria-label="Принципы">Принципы</a><ul>
+                        
+                <li>
+                    <a href="#%d0%bd%d0%b0%d0%b7%d0%b2%d0%b0%d0%bd%d0%b8%d1%8f" aria-label="Названия">Названия</a><ul>
+                        
+                <li>
+                    <a href="#%d0%b8%d1%81%d1%87%d0%b5%d1%80%d0%bf%d1%8b%d0%b2%d0%b0%d1%8e%d1%89%d0%b8%d0%b5-%d0%bd%d0%b0%d0%b7%d0%b2%d0%b0%d0%bd%d0%b8%d1%8f" aria-label="Исчерпывающие названия">Исчерпывающие названия</a></li>
+                <li>
+                    <a href="#%d0%b4%d0%be%d0%bf%d0%be%d0%bb%d0%bd%d0%b5%d0%bd%d0%b8%d0%b5-%d0%ba%d0%be%d0%bd%d1%82%d0%b5%d0%ba%d1%81%d1%82%d0%be%d0%bc" aria-label="Дополнение контекстом">Дополнение контекстом</a></li>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%b4%d0%b8%d1%80%d0%be%d0%b2%d0%ba%d0%b0-%d0%bf%d1%80%d0%b8%d0%b7%d0%bd%d0%b0%d0%ba%d0%be%d0%b2" aria-label="Кодировка признаков">Кодировка признаков</a></li>
+                <li>
+                    <a href="#%d0%be%d0%b4%d0%bd%d0%b0-%d0%ba%d0%be%d0%bd%d1%86%d0%b5%d0%bf%d1%86%d0%b8%d1%8f--%d0%be%d0%b4%d0%bd%d0%be-%d0%b8%d0%bc%d1%8f" aria-label="Одна концепция &ndash; одно имя">Одна концепция &ndash; одно имя</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d1%84%d1%83%d0%bd%d0%ba%d1%86%d0%b8%d0%b8" aria-label="Функции">Функции</a><ul>
+                        
+                <li>
+                    <a href="#%d0%be%d0%b4%d0%bd%d0%be-%d0%b4%d0%b5%d0%b9%d1%81%d1%82%d0%b2%d0%b8%d0%b5" aria-label="Одно действие">Одно действие</a></li>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%bc%d0%bf%d0%b0%d0%ba%d1%82%d0%bd%d0%be%d1%81%d1%82%d1%8c" aria-label="Компактность">Компактность</a></li>
+                <li>
+                    <a href="#%d0%b0%d1%80%d0%b3%d1%83%d0%bc%d0%b5%d0%bd%d1%82%d1%8b" aria-label="Аргументы">Аргументы</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d1%84%d0%be%d1%80%d0%bc%d0%b0%d1%82%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5" aria-label="Форматирование">Форматирование</a></li>
+                <li>
+                    <a href="#%d1%81%d1%82%d0%b0%d0%bd%d0%b4%d0%b0%d1%80%d1%82%d1%8b" aria-label="Стандарты">Стандарты</a></li>
+                <li>
+                    <a href="#%d0%b4%d0%b2%d0%b5-%d1%88%d0%b0%d0%bf%d0%ba%d0%b8" aria-label="Две шапки">Две шапки</a><ul>
+                        
+                <li>
+                    <a href="#%d0%bf%d0%b5%d1%80%d0%b2%d0%b0%d1%8f" aria-label="Первая">Первая</a></li>
+                <li>
+                    <a href="#%d0%b2%d1%82%d0%be%d1%80%d0%b0%d1%8f" aria-label="Вторая">Вторая</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%bc%d0%bc%d0%b5%d0%bd%d1%82%d0%b0%d1%80%d0%b8%d0%b8" aria-label="Комментарии">Комментарии</a></li>
+                <li>
+                    <a href="#%d1%87%d1%80%d0%b5%d0%b7%d0%bc%d0%b5%d1%80%d0%bd%d1%8b%d0%b9-%d0%bf%d0%b5%d1%80%d1%84%d0%b5%d0%ba%d1%86%d0%b8%d0%be%d0%bd%d0%b8%d0%b7%d0%bc--%d0%bf%d0%bb%d0%be%d1%85%d0%be" aria-label="Чрезмерный перфекционизм &ndash; плохо">Чрезмерный перфекционизм &ndash; плохо</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%d0%ba%d0%be%d0%bd%d0%b5%d1%86" aria-label="Конец">Конец</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><img alt="Пузырьки!" loading="lazy" src="/CleanCodeCover.png"></p>
+<p>Эта статья &ndash; краткий обзор первой половины книги <em>Чистый код</em>.</p>
+<p>Разберём ключевые принципы именования переменных, проектирования функций и других аспектов, чтобы писать код, который будет понятен вам и вашей команде спустя годы.</p>
+<h1 id="для-самых-нетерпеливых">Для самых нетерпеливых<a hidden class="anchor" aria-hidden="true" href="#для-самых-нетерпеливых">#</a></h1>
+<p>Основные тезисы для тех, кто не хочет читать эту прекрасную статью целиком.</p>
+<ul>
+<li>Думайте над именами</li>
+<li>Не делайте код слишком чистым</li>
+<li>Следуйте стандартам языка или вашей команды</li>
+<li>Программист не должен заниматься форматированием</li>
+</ul>
+<h1 id="чистый-vs-грязный-код">Чистый vs грязный код<a hidden class="anchor" aria-hidden="true" href="#чистый-vs-грязный-код">#</a></h1>
+<p>Чистый код легко читается, изменятся и поддерживается. Это тот код, с которым легко работать и вносить новый функционал.</p>
+<p>Грязный код затормаживает разработку новых фич из-за того, что программистам тяжело с ним работать.</p>
+<h1 id="принципы">Принципы<a hidden class="anchor" aria-hidden="true" href="#принципы">#</a></h1>
+<p>Призваны помочь борьбе с грязным кодом, делая жизнь программистов легче.</p>
+<h2 id="названия">Названия<a hidden class="anchor" aria-hidden="true" href="#названия">#</a></h2>
+<p><img alt="Обычная ситуация" loading="lazy" src="/NamingMeme.png"></p>
+<h3 id="исчерпывающие-названия">Исчерпывающие названия<a hidden class="anchor" aria-hidden="true" href="#исчерпывающие-названия">#</a></h3>
+<p>Для того чтобы выбрать название, задайте себе вопрос: <em>&ldquo;что делает эта функция?&rdquo;</em> или <em>&ldquo;что обозначает эта переменная?&rdquo;</em>. Если вы не можете ответить на вопрос &ndash; займитесь рефакторингом.</p>
+<blockquote>
+<p><em>Самое сложная вещь в программировании &ndash; это нейминг.</em></p></blockquote>
+<p>Поэтому стоит подумать хотя бы минуту, прежде чем давать имя чему-либо.</p>
+<p>Если вы понимаете, что делает функция, которую вы написали месяц назад &ndash; поздравляю, у вас получилось подобрать хорошее название.</p>
+<h3 id="дополнение-контекстом">Дополнение контекстом<a hidden class="anchor" aria-hidden="true" href="#дополнение-контекстом">#</a></h3>
+<p>Как правило, в современных языках программирования существуют модули, которые разделяют кодовую базу на части. Следовательно, каждое название находится только в своей зоне видимости и не требует дополнительного уточнения его принадлежности.</p>
+<h3 id="кодировка-признаков">Кодировка признаков<a hidden class="anchor" aria-hidden="true" href="#кодировка-признаков">#</a></h3>
+<p>Кодирование признаков в именах бесполезно &ndash; IDE и так даёт всю нужную информацию о переменной. Также, оно ухудшает удобочитаемость кода и затрудняет автодополнение при вводе.</p>
+<h3 id="одна-концепция--одно-имя">Одна концепция &ndash; одно имя<a hidden class="anchor" aria-hidden="true" href="#одна-концепция--одно-имя">#</a></h3>
+<p>Каждая концепция должна обозначаться одним и тем же словом &ndash; иначе придётся разбираться чем одно отличается от другого.</p>
+<h2 id="функции">Функции<a hidden class="anchor" aria-hidden="true" href="#функции">#</a></h2>
+<blockquote>
+<p><em>Функции &ndash; как хорошие шутки: короткие и по делу.</em></p>
+<p><em>&ndash; DeepSeek</em></p></blockquote>
+<p>Функции выступают основными строительными блоками программы. Поэтому, важно писать их так, чтобы было понятно, что происходит в коде.</p>
+<h3 id="одно-действие">Одно действие<a hidden class="anchor" aria-hidden="true" href="#одно-действие">#</a></h3>
+<blockquote>
+<p><em>Функция должна выполнять только одну операцию. Она должна выполнять её хорошо, и ничего другого она делать не должна.</em></p>
+<p><em>&ndash; Роберт Мартин</em></p></blockquote>
+<p>Если название функции намекает на то, что она выполняет несколько действий, разбейте её тело на две новые функции. Таким образом, теперь она выполняет только одну задачу &ndash; объединение двух новых функций.</p>
+<h3 id="компактность">Компактность<a hidden class="anchor" aria-hidden="true" href="#компактность">#</a></h3>
+<blockquote>
+<p><em>Первое правило: функции должны быть компактными. Второе правило: функции должны быть еще компактнее.</em></p>
+<p><em>&ndash; Роберт Мартин</em></p></blockquote>
+<p>Чем компактнее функция, тем лучше. Но как и с любой вещью важно не переусердствовать &ndash; если функция легко читается, то зачем её разделять?</p>
+<h3 id="аргументы">Аргументы<a hidden class="anchor" aria-hidden="true" href="#аргументы">#</a></h3>
+<p>Чем меньше аргументов, тем лучше. Три или четыре &ndash; уже много. Для уменьшения их количества можно объединять в структуры, разделяя по группам.</p>
+<h2 id="форматирование">Форматирование<a hidden class="anchor" aria-hidden="true" href="#форматирование">#</a></h2>
+<p><strong>Программист не должен заниматься форматированием.</strong></p>
+<p>В каждом языке программирования есть программы для форматирования кода. Их преимущество в том, что они работают быстро и соблюдают все стандарты языка.</p>
+<p>Также, их можно настраивать, чтобы соблюдать особые правила выработанные в команде.</p>
+<h2 id="стандарты">Стандарты<a hidden class="anchor" aria-hidden="true" href="#стандарты">#</a></h2>
+<p>Важный аспект чистого кода это соблюдение стандартов. Они есть почти во всех языках программирования.</p>
+<ul>
+<li>Python &ndash; <a href="https://peps.python.org/pep-0008/">PEP 8</a></li>
+<li>Rust &ndash; <a href="https://doc.rust-lang.org/stable/style-guide/">The Rust Style Guide</a></li>
+<li>C++ &ndash; <a href="https://google.github.io/styleguide/cppguide.html">Google C++ Style Guide</a></li>
+</ul>
+<p>Просто следуйте им. Это снизит когнитивную нагрузку на мозг в спорных ситуациях, так как можно сделать так, как прописано в стандарте.</p>
+<h2 id="две-шапки">Две шапки<a hidden class="anchor" aria-hidden="true" href="#две-шапки">#</a></h2>
+<p><img alt="Классика" loading="lazy" src="/TwoMeme.png"></p>
+<p>Одна для написания кода, а другая для рефакторинга.</p>
+<h3 id="первая">Первая<a hidden class="anchor" aria-hidden="true" href="#первая">#</a></h3>
+<p>Фокусируйтесь только на написании функционала. Не заморачивайтесь о длине функций, названиях переменных и т.д. Главная задача этой шапки &ndash; получить работающий код.</p>
+<h3 id="вторая">Вторая<a hidden class="anchor" aria-hidden="true" href="#вторая">#</a></h3>
+<p>Приводите написанный код в читаемое состояние. Если вдруг стало нужно написать какой-то функционал &ndash; меняйте шапку.</p>
+<h2 id="комментарии">Комментарии<a hidden class="anchor" aria-hidden="true" href="#комментарии">#</a></h2>
+<p>Хороший комментарий должен описывать подробности, которые не могут быть выражены кодом. Например, примеры каких-то значений.</p>
+<p>Не комментируйте то, что и так очевидно. Это не принесёт пользу, а наоборот навредит читаемости.</p>
+<p>Удаляйте комментарии, которые перестали быть актуальными после изменений кода, так как они описывают уже не тот функционал, который был раньше.</p>
+<h2 id="чрезмерный-перфекционизм--плохо">Чрезмерный перфекционизм &ndash; плохо<a hidden class="anchor" aria-hidden="true" href="#чрезмерный-перфекционизм--плохо">#</a></h2>
+<p>Занимаясь бесконечным рефакторингом, вы перестаёте писать функционал. Доводите код до состояния <em>достаточно чисто</em>, а не до идеала &ndash; иначе вы никогда ничего не напишете.</p>
+<p><strong>Пожалуй это главное, чего стоит придерживаться, когда пытаешься писать чистый код.</strong></p>
+<h1 id="конец">Конец<a hidden class="anchor" aria-hidden="true" href="#конец">#</a></h1>
+<p>Надеюсь, статья была полезной. Другие статьи можно найти в <a href="https://t.thegblog">моём блоге</a>.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">GБлог</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'копировать';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'скопировано!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'копировать';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
